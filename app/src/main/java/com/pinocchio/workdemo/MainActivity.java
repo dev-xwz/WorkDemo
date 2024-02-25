@@ -1,50 +1,58 @@
 package com.pinocchio.workdemo;
 
 import android.app.Activity;
-import android.graphics.Rect;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.PopupWindow;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.pinocchio.workdemo.adapter.OverlayAvatarAdapter;
+import com.pinocchio.workdemo.barchart.BarChartActivity;
+import com.pinocchio.workdemo.overlayavator.activity.OverlayAvatarActivity;
+import com.pinocchio.workdemo.trapezoidview.TrapezoidDrawable;
+import com.pinocchio.workdemo.trapezoidview.TrapezoidView;
 
 public class MainActivity extends Activity {
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initOverlayAvatarRecycleView();
+        initView();
     }
 
-    private void initOverlayAvatarRecycleView() {
-        RecyclerView overlayAvatarRecycleView = findViewById(R.id.rcv_overlay_avatar);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-//        linearLayoutManager.setStackFromEnd(false); //列表在底部开始展示
-//        linearLayoutManager.setReverseLayout(false); //列表反转
-        overlayAvatarRecycleView.setLayoutManager(linearLayoutManager);
+    private void initView() {
+        initOverlayAvatarView();
+        initBarChartView();
+        initTrapezoidView();
+    }
 
-        OverlayAvatarAdapter overlayAvatarAdapter = new OverlayAvatarAdapter();
-        overlayAvatarRecycleView.setAdapter(overlayAvatarAdapter);
-
-        overlayAvatarRecycleView.addItemDecoration(new RecyclerView.ItemDecoration() {
+    private void initOverlayAvatarView() {
+        findViewById(R.id.ll_overlay_entrance).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-                super.getItemOffsets(outRect, view, parent, state);
-                if (parent.getChildLayoutPosition(view) > 0) {
-                    outRect.left = dp2px( -30);
-                }
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, OverlayAvatarActivity.class));
             }
         });
     }
 
-    private int dp2px(int dps) {
-        return Math.round(getResources().getDisplayMetrics().density * dps);
+    private void initBarChartView() {
+        findViewById(R.id.ll_bar_chart_entrance).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, BarChartActivity.class));
+            }
+        });
+    }
+
+    private void initTrapezoidView() {
+        TrapezoidView trapezoidView = findViewById(R.id.trapezoid_view);
+        View view = findViewById(R.id.view);
+        view.setBackground(new TrapezoidDrawable());
     }
 }

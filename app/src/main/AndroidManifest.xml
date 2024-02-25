@@ -23,6 +23,13 @@
             </intent-filter>
 
         </activity>
+
+        <activity
+            android:name=".overlayavator.activity.OverlayAvatarActivity"
+            android:exported="true" />
+        <activity
+            android:name=".barchart.BarChartActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
